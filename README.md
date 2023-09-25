@@ -1,7 +1,7 @@
-#Artopia
+#GalleryGrove
 
 Overview:
-Artopia is a web application designed to simulate an online art gallery. It provides a platform for managing artworks and related artist information through comprehensive CRUD operations.
+GalleryGrove is a web application designed to simulate an online art gallery. It provides a platform for managing artworks and related artist information through comprehensive CRUD operations.
 
 Tech Stack:
 Frontend: HTML, CSS, JavaScript
