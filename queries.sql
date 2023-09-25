@@ -10,30 +10,39 @@ DROP TABLE IF EXISTS admins;
 
 CREATE TABLE Artist (
   artistId INT NOT NULL AUTO_INCREMENT,
-  fName VARCHAR(100) NOT NULL,
-  lName VARCHAR(100) NOT NULL,
-  PRIMARY KEY (artistId)
-);
+  CREATE TABLE Artist (
+    artistId INT NOT NULL AUTO_INCREMENT,
+    fName VARCHAR(100) NOT NULL,
+    lName VARCHAR(100) NOT NULL,
+    PRIMARY KEY (artistId)
+  );
 
+  CREATE TABLE Seller (
+    sellerId INT NOT NULL AUTO_INCREMENT,
+    fName VARCHAR(100) NOT NULL,
+    lName VARCHAR(100) NOT NULL,
+    email VARCHAR(254) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    address TEXT,
+    PRIMARY KEY (sellerId)
+  );
 
-CREATE TABLE Seller (
-  sellerId INT NOT NULL AUTO_INCREMENT,
-  fName VARCHAR(100) NOT NULL,
-  lName VARCHAR(100) NOT NULL,
-  email VARCHAR(254) NOT NULL,
-  password VARCHAR(255) NOT NULL,
-  address TEXT,
-  PRIMARY KEY (sellerId)
-);
+  CREATE TABLE Genre (
+    genreId INT NOT NULL AUTO_INCREMENT,
+    name VARCHAR(50) NOT NULL,
+    PRIMARY KEY (genreId)
+  );
 
-CREATE TABLE Genre (
-  genreId INT NOT NULL AUTO_INCREMENT,
-  name VARCHAR(50) NOT NULL,
-  PRIMARY KEY (genreId)
-);
-
-CREATE TABLE Arts (
-  artId INT NOT NULL AUTO_INCREMENT,
+  CREATE TABLE Arts (
+    artId INT NOT NULL AUTO_INCREMENT,
+    artistId INT NOT NULL,
+    title VARCHAR(100) NOT NULL,
+    description TEXT,
+    image BLOB,
+    price DOUBLE(10,2) NOT NULL,
+    PRIMARY KEY (artId),
+    FOREIGN KEY (artistId) REFERENCES Artist(artistId)
+  );
   artistId INT NOT NULL,
   title VARCHAR(100) NOT NULL,
   description TEXT,
@@ -211,8 +220,6 @@ INSERT INTO Art_Genre (artId, genreId) VALUES (11, 4);
 INSERT INTO Art_Genre (artId, genreId) VALUES (12, 3);
 
 
-
--- ---------------------------------Aashish Dhakal-------------------------------------------------------------
 -- Query 2)
 -- query changed to display multiple rows
 SELECT a.title, CONCAT(ar.fName, ' ' ,ar.lName) as artist
@@ -239,7 +246,7 @@ JOIN Seller ON Payment.userId = Seller.sellerId
 GROUP BY Artist.artistId, artist_name
 ORDER BY Artist.lName ASC;
 
--- -- ------------------------------Amisha Subedi------------------------------------------------------------------
+
 -- Query 1) 
 SELECT 
   g.name AS genre_name,
@@ -259,7 +266,7 @@ JOIN Seller ON Transactions.userId = Seller.sellerId
 GROUP BY Transactions.userId, Transactions.date
 ORDER BY Transactions.date, Seller.lname ASC;
 
----------------------------------------------Main Page Query-----------------------------------------------------------------
+
 
 -- Query test new (different from milestone3 had to edit to concatenate genre)
 --This query retrieves a list of artworks along with their details, including art ID, title, artist name, description, price, and a comma-separated list of associated genres.

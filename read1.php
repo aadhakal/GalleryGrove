@@ -3,7 +3,7 @@
     require_once("included_functions.php");
     require_once("database.php");
 
-    new_header("Artopia 2023");
+    new_header("GalleryGrove 2023");
     $mysqli = Database::dbConnect();
     $mysqli->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
@@ -19,7 +19,7 @@
     if ($stmt) {
         echo "<div class='row'>";
         echo "<center>";
-        echo "<h2>Aggregate Query </h2>";
+        echo "<h2>Average Art Price by Genre</h2>";
         echo "<table>";
         echo "<thead>";
         echo "<tr><th>Genre Name</th><th>Quantity</th><th>Average Price</th></tr>";
@@ -34,7 +34,7 @@
            // echo "<td><a href='delete.php?id=".urlencode($row['artistId'])."' onclick='return confirm(\"Are you sure want to delete?\");' style='color:red;'>X</a></td>";
             echo "<td>{$name}</td>";
             echo "<td>{$artworks}</td>";
-            echo "<td>".number_format($avg, 2)."</td>";
+             echo "<td>$" . number_format($avg, 2) ."</td>";
             //echo "<td><a href='edit.php?id=".urlencode($row['artistId'])."'>Edit</a></td>";
             echo "</tr>";
         }
@@ -52,7 +52,7 @@
     FROM Transactions
     JOIN Seller ON Transactions.userId = Seller.sellerId
     GROUP BY Transactions.userId, Transactions.date
-    ORDER BY Transactions.date, Seller.lname ASC;";
+    ORDER BY Transactions.date, Seller.fname ASC;";
 
 
     $stmt2 = $mysqli->prepare($query2);
@@ -61,7 +61,7 @@
     if ($stmt2) {
         echo "<div class='row'>";
         echo "<center>";
-        echo "<h2>GROUP_CONCAT 1</h2>";
+        echo "<h2>Recent Sellers (By Date)</h2>";
         echo "<table>";
         echo "<thead>";
         echo "<tr><th>Seller</th><th>Date</th><th>Amount</th></tr>";
@@ -76,7 +76,7 @@
             // echo "<td><a href='delete.php?id=".urlencode($row['artistId'])."' onclick='return confirm(\"Are you sure want to delete?\");' style='color:red;'>X</a></td>";
             echo "<td>{$seller}</td>";
             echo "<td>{$date}</td>";
-            echo "<td>{$amount}</td>";
+            echo "<td>$" . number_format($amount, 2) . "</td>";
             // echo "<td><a href='edit.php?id=".urlencode($row['artistId'])."'>Edit</a></td>";
             echo "</tr>";
         }
@@ -106,7 +106,7 @@
     if ($stmt3) {
         echo "<div class='row'>";
         echo "<center>";
-        echo "<h2>Nested Query</h2>";
+        echo "<h2>Art pieces over $200 by Van Gogh and Picasso</h2>";
         echo "<table>";
         echo "<thead>";
         echo "<tr><th>Title</th><th>Artist</th></tr>";
@@ -132,13 +132,13 @@
 
     // query 4
     $query4 = "SELECT 
-    CONCAT(Artist.fName, ' ', Artist.lName) AS artist_name,
+    CONCAT(Artist.fName, ' ', Artist.lName) AS Artist_Name,
     GROUP_CONCAT(CONCAT(Seller.fName, ' ', Seller.lName) ORDER BY Seller.lName ASC SEPARATOR ', ') AS users
     FROM Payment
     JOIN Arts ON Payment.artId = Arts.artId
     JOIN Artist ON Arts.artistId = Artist.artistId
     JOIN Seller ON Payment.userId = Seller.sellerId
-    GROUP BY Artist.artistId, artist_name
+    GROUP BY Artist.artistId, Artist_Name
     ORDER BY Artist.lName ASC;";
 
     $stmt4 = $mysqli->prepare($query4);
@@ -147,14 +147,14 @@
     if ($stmt4) {
         echo "<div class='row'>";
         echo "<center>";
-		echo "<h2>GROUP_CONCAT 2</h2>";
+		echo "<h2>Curios which artist has more users?</h2>";
         echo "<table>";
         echo "<thead>";
-        echo "<tr><th>artist_name</th><th>users</th></tr>";
+        echo "<tr><th>Artist_Name</th><th>users</th></tr>";
         echo "</thead>";
         echo "<tbody>";
         while ($row = $stmt4->fetch(PDO::FETCH_ASSOC)) {
-            $artist = $row['artist_name'];
+            $artist = $row['Artist_Name'];
             $users = $row['users'];
             
             echo "<tr>";
@@ -173,6 +173,6 @@
     }
 	
 	
-    new_footer("Artopia");
+    new_footer("GalleryGrove");
     Database::dbDisconnect($mysqli);
 ?>

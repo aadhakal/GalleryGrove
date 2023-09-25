@@ -3,7 +3,7 @@
     require_once("included_functions.php");
     require_once("database.php");
 
-    new_header("Artopia 2023");
+    new_header("GalleryGrove 2023");
 
     $mysqli = Database::dbConnect();
     $mysqli->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -27,10 +27,10 @@
     if ($stmt) {
         echo "<div class='row'>";
         echo "<center>";
-        echo "<h2>Artopia</h2>";
+        echo "<h2>GalleryGrove</h2>";
         echo "<table>";
         echo "<thead>";
-        echo "<tr><th></th><th>Artist</th><th>Genre</th><th>Title</th><th>Description</th><th>Price</th></tr>";
+        echo "<tr><th>Artist</th><th>Genre</th><th>Title</th><th>Description</th><th>Price</th></tr>";
         echo "</thead>";
         echo "<tbody>";
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -46,20 +46,20 @@
             echo "<td>{$genre}</td>";
             echo "<td>{$title}</td>";
             echo "<td>{$description}</td>";
-            echo "<td>{$price}</td>";
+            echo "<td>$" . number_format($price, 2) . "</td>";
             echo "<td><a href='update.php?id=".urlencode($row['artId'])."'>Edit</a></td>";
             echo "</tr>";
         }
         echo "</tbody>";
         echo "</table>";
         echo "<p><a href='create.php'>Add a new art piece</a></p>";
-        echo "<a href='read1.php'>Other queries</a>";
+        echo "<a href='read1.php'>More Art Details</a>";
         echo "</center>";
         echo "</div>";
     } else {
         echo "Error: " . $mysqli->error;
     }
 
-    new_footer("Artopia ");
+    new_footer("GalleryGrove");
     Database::dbDisconnect($mysqli);
 ?>

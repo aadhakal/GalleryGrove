@@ -44,11 +44,7 @@
 		}
 	}
 /////////////////////////////////////////////////////////////////////////////////////////////////////
-//  LAB 11 Step 8.   Write the function verify_login which will need to be invoked in each of the webpages
-
-//				     Verify the admin_id session variable has been set and is not null
-//				     If either case is false, create a session message "You must login in first"
-//				     and redirect to index.php
+// Write the function verify_login which will need to be invoked in each of the webpages
 
 				
 				
